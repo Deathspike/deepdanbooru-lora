@@ -35,11 +35,7 @@ Edit `outputPath` in `config.py`. Then:
 
     python step-03.py
 
-This will select keyframes matching the desired outputs. Currently this is:
-
-    if (len(frameTagsCharacter) == 1 and ('1girl' in frameTagsGeneral and not '1boy' in frameTagsGeneral)):
-
-Change to your desired filters. But if you're after anime girls, this will work as-is.
+This will select keyframes matching a `1boy` or `1girl` tag.
 
 ## Step 4: Manual work
 

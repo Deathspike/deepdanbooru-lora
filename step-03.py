@@ -22,8 +22,10 @@ for i, textName in enumerate(frameNames):
         frameTagsCharacter = [x for x in valueArray if x in tagsCharacter]
         frameTagsGeneral = [x for x in valueArray if x in tagsGeneral]
 
-        # Use images with one female character.
-        if (len(frameTagsCharacter) == 1 and ('1girl' in frameTagsGeneral and not '1boy' in frameTagsGeneral)):
+        # Use images with one character.
+        if (len(frameTagsCharacter) == 1 and (
+            ('1girl' in frameTagsGeneral and not '1boy' in frameTagsGeneral) or
+            ('1boy' in frameTagsGeneral and not '1girl' in frameTagsGeneral))):
             tag = frameTagsCharacter[0]
             imageName = os.path.splitext(textName)[0] + '.png'
             imagePath = os.path.join(config.framePath, imageName)
