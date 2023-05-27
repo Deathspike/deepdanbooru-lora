@@ -43,4 +43,4 @@ Change to your desired filters. But if you're after anime girls, this will work 
 
 ## Step 4: Manual work
 
-Your screen grabs are now tagged and filtered. The rest is LoRA training. Good luck.
+Your screen grabs are now tagged and filtered. You will want to look through the keyframes and remove incorrect matches or problematic screen grabs. In my experience about 95% was correct, but a few mismatches did exist. The rest is LoRA training. Good luck.
