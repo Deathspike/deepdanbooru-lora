@@ -45,6 +45,6 @@ for i, frameName in enumerate(frameNames):
                 resultGeneral.append(tag)
 
         # Write the tags.
-        valueArray = resultCharacter + resultGeneral
+        valueArray = set(resultCharacter + resultGeneral)
         value = ', '.join(item.replace('_', ' ') for item in valueArray)
         with open(textPath, 'w') as file: file.write(value)

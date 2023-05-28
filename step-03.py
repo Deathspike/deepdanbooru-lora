@@ -26,12 +26,17 @@ for i, textName in enumerate(frameNames):
         if (len(frameTagsCharacter) == 1 and (
             ('1girl' in frameTagsGeneral and not '1boy' in frameTagsGeneral) or
             ('1boy' in frameTagsGeneral and not '1girl' in frameTagsGeneral))):
-            tag = frameTagsCharacter[0]
+            # Initialize the character name.
+            characterName = frameTagsCharacter.pop()
             imageName = os.path.splitext(textName)[0] + '.png'
             imagePath = os.path.join(config.framePath, imageName)
-            os.makedirs(os.path.join(config.outputPath, tag), exist_ok=True)
-            shutil.copyfile(imagePath, os.path.join(config.outputPath, tag, imageName))
 
-            characterFramePath = os.path.join(config.outputPath, tag, textName)
-            value = ', '.join(item.replace('_', ' ') for item in [tag] + frameTagsGeneral)
+            # Initialize the character path.
+            os.makedirs(os.path.join(config.outputPath, characterName), exist_ok=True)
+            shutil.copyfile(imagePath, os.path.join(config.outputPath, characterName, imageName))
+
+            # Write the tags.
+            characterFramePath = os.path.join(config.outputPath, characterName, textName)
+            valueArray = [characterName] + list(set(frameTagsGeneral))
+            value = ', '.join(item.replace('_', ' ') for item in valueArray)
             with open(characterFramePath, 'w') as file: file.write(value)
