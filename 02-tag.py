@@ -1,29 +1,28 @@
-import config
 import deepdanbooru
 import os
 
-frameNames = os.listdir(config.framePath)
-frameNamesLen = len(frameNames)
+deepdanbooruPath = '/path/to/your/danbooru/model'
+inputPath = '/path/to/your/anime/keyframe'
 model = None
 
-for i, frameName in enumerate(frameNames):
+for i, frameName in enumerate(os.listdir(inputPath)):
     # Iterate each frame.
-    print(f'{i + 1} / {frameNamesLen}', end='\r')
-    framePath = os.path.join(config.framePath, frameName)
+    print(f'{i + 1}', end='\r')
+    framePath = os.path.join(inputPath, frameName)
     textName = os.path.splitext(frameName)[0] + '.txt'
-    textPath = os.path.join(config.framePath, textName)
+    textPath = os.path.join(inputPath, textName)
 
     if not os.path.exists(textPath):
         # Initialize the dependencies.
         if model is None:
             # Initialize the danbooru model.
-            model = deepdanbooru.project.load_model_from_project(config.deepdanbooruPath, compile_model=False)
+            model = deepdanbooru.project.load_model_from_project(deepdanbooruPath, compile_model=False)
             modelShape = model.input_shape
 
             # Initialize the danbooru tags.
-            tags = deepdanbooru.project.load_tags_from_project(config.deepdanbooruPath)
-            tagsCharacter = deepdanbooru.data.load_tags(os.path.join(config.deepdanbooruPath, 'tags-character.txt'))
-            tagsGeneral = deepdanbooru.data.load_tags(os.path.join(config.deepdanbooruPath, 'tags-general.txt'))
+            tags = deepdanbooru.project.load_tags_from_project(deepdanbooruPath)
+            tagsCharacter = deepdanbooru.data.load_tags(os.path.join(deepdanbooruPath, 'tags-character.txt'))
+            tagsGeneral = deepdanbooru.data.load_tags(os.path.join(deepdanbooruPath, 'tags-general.txt'))
 
         # Initialize the image.
         image = deepdanbooru.data.load_image_for_evaluate(framePath, width=modelShape[2], height=modelShape[1])
@@ -37,7 +36,7 @@ for i, frameName in enumerate(frameNames):
 
         # Initialize the image tags.
         for j, tag in enumerate(tags):
-            if result[j] < config.deepdanbooruThreshold:
+            if result[j] < 0.5:
                 continue
             elif tag in tagsCharacter:
                 resultCharacter.append(tag)
